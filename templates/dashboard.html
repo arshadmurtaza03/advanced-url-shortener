@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card p-4 mb-4">
+    <h4>Shorten a new URL</h4>
+    <form action="{{ url_for('shorten_url') }}" method="POST" class="d-flex gap-2">
+        <input type="text" name="url" class="form-control" placeholder="Enter long URL here..." required>
+        <button class="btn btn-success">Shorten</button>
+    </form>
+</div>
+
+<h3>Your History</h3>
+<div class="card">
+    <table class="table table-striped mb-0">
+        <thead>
+            <tr>
+                <th>Original URL</th>
+                <th>Short Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for url in urls %}
+            <tr>
+                <td class="text-truncate" style="max-width: 300px;">{{ url.original_url }}</td>
+                <td>
+                    <a href="{{ host_url }}{{ url.short_url }}" target="_blank">
+                        {{ host_url }}{{ url.short_url }}
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="2">No URLs shortened yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
